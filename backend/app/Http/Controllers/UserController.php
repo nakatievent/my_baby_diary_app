@@ -26,6 +26,14 @@ class UserController extends Controller
      */
     public function create()
     {
+        $user = new User;
+        // $requestにformからのデータが格納されているので、以下のようにそれぞれ代入する
+        $user->title = $request->title;
+        $user->body = $request->body;
+        // 保存
+        $user->save();
+        // 保存後 一覧ページへリダイレクト
+        return redirect('/articles');
         //
     }
 
@@ -48,7 +56,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+      // 引数で受け取った$idを元にfindでレコードを取得
+       $users = User::find($id);
+        // viewにデータを渡す
+       return view('users.show', ['user' => $user]);
     }
 
     /**
@@ -59,7 +70,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+      $user = User::find($id);
+      return view('users.edit', ['user' => $user]);
     }
 
     /**
@@ -71,7 +83,15 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      // idを元にレコードを検索して$userに代入
+      $user = user::find($id);
+      // editで編集されたデータを$userにそれぞれ代入する
+      $user->title = $request->title;
+      $user->body = $request->body;
+      // 保存
+      $user->save();
+      // 詳細ページへリダイレクト
+      return redirect("/users/".$id);
     }
 
     /**
@@ -82,6 +102,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+      // idを元にレコードを検索
+      $user = user::find($id);
+      // 削除
+      $user->delete();
+      // 一覧にリダイレクト
+      return redirect('/users');
     }
 }
