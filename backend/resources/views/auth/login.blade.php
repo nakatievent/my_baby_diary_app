@@ -11,14 +11,11 @@
     integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="login.css">
 
-  <title>ログインページの編集</title>
+  <title>ログインページ</title>
 </head>
 
 <body>
   <div class="container">
-    <div class="row">
-
-    </div>
 
     <div class="row">
       <div class="col-md-6 mx-auto border border-dark border-3 p-5 position-absolute top-50 start-50 translate-middle">
@@ -71,7 +68,7 @@
                 @endif
 
                 　<button type="submit" class="btn btn-primary">専用ログイン</button>
-                </button>
+
             </div>
         </form>
         </div>
