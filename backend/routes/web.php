@@ -13,8 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// トップページの表示
 Route::get('/', function () {
     return view('welcome');
+});
+
+// 概要ページの表示
+Route::get('/overview', function () {
+    return view('overview');
 });
 
 Route::get('/dashboard', function () {
