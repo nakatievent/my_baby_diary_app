@@ -1,12 +1,3 @@
-{{-- layoutsフォルダのapplication.blade.phpを継承 --}}
-@extends('layouts.application')
-
-{{-- @yield('title')にテンプレートごとにtitleタグの値を代入 --}}
-@section('title', '記事一覧')
-
-{{-- application.blade.phpの@yield('content')に以下のレイアウトを代入 --}}
-@section('content')
-
 <!-- <ここからは日記投稿画面> -->
 <div class="row row-cols-1 row-cols-xl-3 g-4">
   @foreach ($posts as $post)
