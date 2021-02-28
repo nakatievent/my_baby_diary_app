@@ -1,3 +1,12 @@
+{{-- layoutsフォルダのapp.blade.phpを継承 --}}
+@extends('layouts.app')
+
+{{-- @yield('title')にテンプレートごとの値を代入 --}}
+@section('title', '投稿一覧')
+
+{{-- app.blade.phpの@yield('content')に以下のレイアウトを代入 --}}
+@section('content')
+
 <!-- <ここからは日記投稿画面> -->
 <div class="row row-cols-1 row-cols-xl-3 g-4">
   @foreach ($posts as $post)
@@ -6,6 +15,7 @@
       <div class="card-body">
         <h5 class="card-title">{{$post->title}}</h5>
         <p class="card-text">{{$post->diary}}</p>
+        <a href="/posts/{{$post->id}}">詳細を表示</a>
       </div>
       <div class="card-footer"> <small class="text-muted">Last updated 3 mins ago</small> </div>
     </div>
