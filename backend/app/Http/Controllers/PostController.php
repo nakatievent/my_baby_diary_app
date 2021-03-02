@@ -26,16 +26,22 @@ class PostController extends Controller
     public function store(Request $request)
     {
       $post = new Post;
-      // $requestにformからのデータが格納されているので、以下のようにそれぞれ代入する
-      $post->picture = $request->picture;
-      $post->title = $request->title;
-      $post->diary = $request->diary;
 
-      // $filename = $request->file('picture')->store('public/image');
-      // $post->picture = basename($filename);
+      // $requestにformからのデータが格納されているので、以下のようにそれぞれ代入する
+      $inputs = request()->validate([
+        'picture'=>'image',
+        'title'=>'required|max:255',
+        'diary'=>'required|max:255',
+      ]);
+
+        // 画像ファイルの保存場所指定
+        if(request('picture')) {
+          $filename = request()->file('picture')->getClientOriginalName();
+          $inputs['picture'] = request('picture')->storeAs('public/image', $filename);
+      }
 
       // 保存
-      $post->save();
+      $post->create($inputs);
       // 保存後 一覧ページへリダイレクト
       return redirect('/posts');
     }
@@ -80,4 +86,5 @@ class PostController extends Controller
       // 一覧にリダイレクト
       return redirect('/posts');
     }
+
 }
