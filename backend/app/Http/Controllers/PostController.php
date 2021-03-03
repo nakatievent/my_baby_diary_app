@@ -19,28 +19,38 @@ class PostController extends Controller
 
     public function create()
     {
-        $post = new Post;
-        // $requestにformからのデータが格納されているので、以下のようにそれぞれ代入する
-        $post->title = $request->title;
-        $post->body = $request->body;
-        // 保存
-        $post->save();
-        // 保存後 一覧ページへリダイレクト
-        return redirect('/articles');
-        //
+      return view('posts.create');
     }
 
 
     public function store(Request $request)
     {
-        //
+      $post = new Post;
+
+      // $requestにformからのデータが格納されているので、以下のようにそれぞれ代入する
+      $inputs = request()->validate([
+        'picture'=>'image',
+        'title'=>'required|max:255',
+        'diary'=>'required|max:255',
+      ]);
+
+        // 画像ファイルの保存場所指定
+        if(request('picture')) {
+          $filename = request()->file('picture')->getClientOriginalName();
+          $inputs['picture'] = request('picture')->storeAs('public/image', $filename);
+      }
+
+      // 保存
+      $post->create($inputs);
+      // 保存後 一覧ページへリダイレクト
+      return redirect('/posts');
     }
 
 
     public function show($id)
     {
       // 引数で受け取った$idを元にfindでレコードを取得
-       $posts = Post::find($id);
+       $post = Post::find($id);
         // viewにデータを渡す
        return view('posts.show', ['post' => $post]);
     }
@@ -59,21 +69,22 @@ class PostController extends Controller
       $post = Post::find($id);
       // editで編集されたデータを$postにそれぞれ代入する
       $post->title = $request->title;
-      $post->body = $request->body;
+      $post->diary = $request->diary;
       // 保存
-      $user->save();
+      $post->save();
       // 詳細ページへリダイレクト
-      return redirect("/users/".$id);
+      return redirect("/posts/".$id);
     }
 
 
     public function destroy($id)
     {
       // idを元にレコードを検索
-      $post = post::find($id);
+      $post = Post::find($id);
       // 削除
       $post->delete();
       // 一覧にリダイレクト
       return redirect('/posts');
     }
+
 }
