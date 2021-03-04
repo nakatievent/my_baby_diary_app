@@ -17,19 +17,26 @@
                 <br>
             </div>
 
-            <form action="/posts/{{$post->id}}" method="post">
+            <form action="/posts/{{ $post->id }}" method="post">
                 {{ csrf_field() }}
 
                 <div class="form-group">
+                    <label for="picture" class="form-label">写真を選択して下さい</label>
+                    <input id="picture" type="file" name="picture" class="form-control" value="{{ $post->picture }}">
+                </div>
+
+                <br>
+
+                <div class="form-group">
                     <label for="title" class="form-label">タイトル</label>
-                    <input id="title" type="text" name="title" class="form-control" placeholder="記事のタイトルを入れる" value="{{$post->title}}">
+                    <input id="title" type="text" name="title" class="form-control" placeholder="記事のタイトルを入れる" value="{{ $post->title }}">
                 </div>
 
                 <br>
 
                 <div class="form-group">
                     <label for="diary" class="form-label">日記</label>
-                    <textarea id="diary" name="diary" class="form-control" rows="8" cols="80" placeholder="記事の内容を入れる">{{$post->diary}}</textarea>
+                    <textarea id="diary" name="diary" class="form-control" rows="8" cols="80" placeholder="記事の内容を入れる">{{ $post->diary }}</textarea>
                 </div>
 
                 <br>

@@ -15,24 +15,25 @@
                 <div class="col">
                     <div class="card h-100"><img src="{{ Storage::url($post->picture) }}" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">{{$post->title}}</h5>
-                            <p class="card-text">{{$post->diary}}</p> 
-                            <a class="btn btn-primary" href="/posts/{{$post->id}}" type="button">詳細を表示</a> 
-                            <a class="btn btn-primary" href="/posts/{{$post->id}}/edit" type="button">編集する</a>
-                            <form action="/posts/{{$post->id}}" method="post"> 
+                            <h5 class="card-title text-center">{{ $post->title }}</h5>
+                            <p class="card-text">{{ $post->diary }}</p> 
+                            <a class="btn btn-primary" href="/posts/{{ $post->id }}" type="button">詳細を表示</a> 
+                            <a class="btn btn-primary" href="/posts/{{ $post->id }}/edit" type="button">編集する</a>
+                            <form action="/posts/{{ $post->id }}" method="post"> 
                               {{ csrf_field() }} 
                               <input type="hidden" name="_method" value="delete"> 
                               <button type="submit" class="btn btn-primary" name="" value="削除する"> 
-                              {{-- <a href="/posts/{{$post->id}}">削除する</a> --}}
+                              {{-- <a href="/posts/{{ $post->id }}">削除する</a> --}}
                             </form>
                             <!-- {{-- <a href="/posts/{{$post->id}}">削除する</a> --}} -->
                         </div>
-                        <div class="card-footer"> <small class="text-muted">Last updated 3 mins ago</small> </div>
+                        <div class="card-footer text-center"><small class="text-muted">投稿日：{{ $post->created_at }}</small></div>
                     </div>
                 </div>
                 @endforeach
             </div>
         </div>
+
         <div class="col-md-3">
             <div class="d-grid gap-2">
                 <a class="btn btn-primary" href="/posts/create" role="button">新規投稿</a>
@@ -42,6 +43,7 @@
                 <button class="btn btn-primary" type="button">Button</button>
             </div>
         </div>
+
     </div>
 
     <br>
