@@ -17,8 +17,19 @@ Route::get('/overview', function () {
 
 Route::resources([
     'users' => UserController::class,
-    'posts' => PostController::class,
 ]);
+
+// Route::group(['middleware' => 'auth'], function() {
+//     Route::resources([
+//         'posts' => PostController::class,
+//     ]);
+//  });
+
+Route::middleware(['auth']) -> group(function () {
+    Route::resources([
+        'posts' => PostController::class,
+    ]);
+});
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
