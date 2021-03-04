@@ -6,14 +6,22 @@
 
 {{-- app.blade.phpの@yield('content')に以下のレイアウトを代入 --}}
 @section('content')
-  <h1>{{$post->title}}</h1>
-  <p>{{$post->diary}}</p>
-  <br><br>
-  <a href="/posts/{{$post->id}}/edit">編集する</a>
-  <form action="/posts/{{$post->id}}" method="post">
-      {{ csrf_field() }}
-      <input type="hidden" name="_method" value="delete">
-      <input type="submit" name="" value="削除する">
-    </form>
-  <a href="/posts">一覧に戻る</a>
+
+<div class="container col-md-5">
+    <div class="row">
+        <div class="card mb-3">
+          <img src="{{ Storage::url($post->picture) }}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title text-center">{{ $post->title }}</h5>
+            <p class="card-text">{{ $post->diary }}</p>
+                <div class="d-flex justify-content-around">
+                    <a class="btn btn-primary" href="/posts/{{ $post->id }}/edit" type="button">編集する</a>
+                    <a class="btn btn-primary" href="/posts" type="button">一覧に戻る</a>
+                </div>
+            <p class="card-text text-center"><small class="text-muted">投稿日：{{ $post->created_at }}</small></p>
+          </div>
+        </div>
+    </div>
+</div>
+
 @endsection
