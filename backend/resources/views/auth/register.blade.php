@@ -57,7 +57,7 @@
                 <br>
 
                 <div class="form-group">
-                    <label for="password-confirm" class="form-label">{{ __('＊パスワードを再度入力して下さい') }}</label>
+                    <label for="password-confirm" class="form-label">{{ __('＊確認の為、パスワードを再度入力して下さい') }}</label>
                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                 </div>
 
