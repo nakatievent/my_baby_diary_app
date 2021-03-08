@@ -11,4 +11,10 @@ class User extends Authenticatable
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    // ポストモデルと１対多の関係なので、下記の記述を追加する
+    public function posts() {
+        return $this->hasMany(Post::class);
+    }
+
 }
