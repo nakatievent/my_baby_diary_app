@@ -10,4 +10,10 @@ class Post extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    // ユーザーモデルと１対多の関係なので、下記の記述を追加する
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
 }
