@@ -12,7 +12,7 @@ class PostController extends Controller
     public function index()
     {
       // $posts変数にPostモデルから全てのレコードを取得して代入する
-      $posts = Post::all();
+      $posts = Post::paginate(10);
       return view('posts.index', ['posts' => $posts]);
     }
 
@@ -25,7 +25,11 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+      // インスタンス作成
       $post = new Post;
+
+      // ユーザーid取得
+      $post->user_id = $request->user()->id;
 
       // $requestにformからのデータが格納されているので、以下のようにそれぞれ代入する
       $inputs = request()->validate([
@@ -34,16 +38,17 @@ class PostController extends Controller
         'diary'=>'required|max:255',
       ]);
 
-        // 画像ファイルの保存場所指定
-        if(request('picture')) {
-          $filename = request()->file('picture')->getClientOriginalName();
-          $inputs['picture'] = request('picture')->storeAs('public/image', $filename);
+      // 画像ファイルの保存場所指定
+      if(request('picture')) {
+        $filename = request()->file('picture')->getClientOriginalName();
+        $inputs['picture'] = request('picture')->storeAs('public/image', $filename);
       }
 
       // 保存
-      $post->create($inputs);
-      // 保存後 一覧ページへリダイレクト
-      return redirect('/posts');
+      $post->fill($inputs)->save();
+
+      // 保存後に一覧ページへリダイレクト
+      return redirect()->route('posts.index');
     }
 
 
@@ -72,8 +77,8 @@ class PostController extends Controller
       $post->diary = $request->diary;
       // 保存
       $post->save();
-      // 詳細ページへリダイレクト
-      return redirect("/posts/".$id);
+      // 一覧ページへリダイレクト
+      return redirect()->route('posts.index');
     }
 
 
@@ -83,8 +88,8 @@ class PostController extends Controller
       $post = Post::find($id);
       // 削除
       $post->delete();
-      // 一覧にリダイレクト
-      return redirect('/posts');
+      // 一覧ページへリダイレクト
+      return redirect()->route('posts.index');
     }
 
 }
