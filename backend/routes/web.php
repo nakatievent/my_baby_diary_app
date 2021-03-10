@@ -19,16 +19,15 @@ Route::resources([
     'users' => UserController::class,
 ]);
 
-// Route::group(['middleware' => 'auth'], function() {
-//     Route::resources([
-//         'posts' => PostController::class,
-//     ]);
-//  });
-
+// ログインしていないとPostに関するRESTfulな機能を使えずにログイン画面に戻る
 Route::middleware(['auth']) -> group(function () {
+    Route::get('/posts/favorites', [App\Http\Controllers\PostController::class, 'favorites'])->name('posts.favorite');
     Route::resources([
         'posts' => PostController::class,
     ]);
+    Route::get('/posts/add_favorite/{id}', [App\Http\Controllers\PostController::class, 'add_favorite']);
+
+
 });
 
 Auth::routes();

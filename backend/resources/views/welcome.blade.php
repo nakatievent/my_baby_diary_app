@@ -31,7 +31,7 @@
                 <ul class="nav justify-content-end hidden fixed top-0 right-0 sm:block">
                     @auth
                     <li class="nav-item">
-                        <a href="{{ url('/home') }}" class="nav-link active">Home</a>
+                        <a href="{{ route('posts.index') }}" class="nav-link active">Home</a>
                     </li>
                     @else
                     <li class="nav-item">
@@ -51,12 +51,6 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <img src="image/64FF6EC0-E9EB-4511-B09A-68D9388769F2_1_105_c.jpeg" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="image/1055573.jpg" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="image/1444188.jpg" class="d-block w-100" alt="...">
                         </div>
                     </div>
                 </div>

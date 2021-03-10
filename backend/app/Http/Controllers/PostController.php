@@ -6,14 +6,47 @@ use Illuminate\Http\Request;
 
 use App\Models\Post;
 
+use Auth;
+
 class PostController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-      // $posts変数にPostモデルから全てのレコードを取得して代入する
-      $posts = Post::all();
+      $keyword = $request->input('keyword');
+      if ($keyword) {
+        $posts = Post::where("user_id", Auth::id())
+          ->where(function($query) use($keyword){
+            $query->where("title", "like", "%$keyword%")
+              ->orWhere("diary", "like", "%$keyword%");
+          })
+          ->paginate(10);
+      } else {
+          // $posts変数にPostモデルから全てのレコードを取得して代入する
+          $posts = Post::where("user_id", Auth::id())->paginate(10);
+      }
       return view('posts.index', ['posts' => $posts]);
+    }
+
+    public function favorites()
+    {
+        $user = Auth::user();
+        $posts = $user->favorite_posts()->get();
+        dd($posts);
+    }
+
+    public function add_favorite(Request $request, $id)
+    {
+      $user = Auth::user();
+      $favorite_post_ids = $user->favorite_posts()->pluck('post_id')->toArray();
+      if (!in_array($id, $favorite_post_ids)) {
+          $favorite_post_ids[] = $id;
+      }
+      $user-> favorite_posts()->detach();
+      // dd();
+      $user->favorite_posts()->attach($favorite_post_ids);
+      // 保存後に一覧ページへリダイレクト
+      return redirect()->route('posts.index');
     }
 
 
@@ -25,7 +58,11 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+      // インスタンス作成
       $post = new Post;
+
+      // ユーザーid取得
+      $post->user_id = $request->user()->id;
 
       // $requestにformからのデータが格納されているので、以下のようにそれぞれ代入する
       $inputs = request()->validate([
@@ -34,16 +71,17 @@ class PostController extends Controller
         'diary'=>'required|max:255',
       ]);
 
-        // 画像ファイルの保存場所指定
-        if(request('picture')) {
-          $filename = request()->file('picture')->getClientOriginalName();
-          $inputs['picture'] = request('picture')->storeAs('public/image', $filename);
+      // 画像ファイルの保存場所指定
+      if(request('picture')) {
+        $filename = request()->file('picture')->getClientOriginalName();
+        $inputs['picture'] = request('picture')->storeAs('public/image', $filename);
       }
 
       // 保存
-      $post->create($inputs);
-      // 保存後 一覧ページへリダイレクト
-      return redirect('/posts');
+      $post->fill($inputs)->save();
+
+      // 保存後に一覧ページへリダイレクト
+      return redirect()->route('posts.index');
     }
 
 
@@ -67,13 +105,16 @@ class PostController extends Controller
     {
       // idを元にレコードを検索して$postに代入
       $post = Post::find($id);
+
       // editで編集されたデータを$postにそれぞれ代入する
       $post->title = $request->title;
       $post->diary = $request->diary;
+
       // 保存
       $post->save();
-      // 詳細ページへリダイレクト
-      return redirect("/posts/".$id);
+
+      // 一覧ページへリダイレクト
+      return redirect()->route('posts.index');
     }
 
 
@@ -81,10 +122,12 @@ class PostController extends Controller
     {
       // idを元にレコードを検索
       $post = Post::find($id);
+
       // 削除
       $post->delete();
-      // 一覧にリダイレクト
-      return redirect('/posts');
+
+      // 一覧ページへリダイレクト
+      return redirect()->route('posts.index');
     }
 
 }

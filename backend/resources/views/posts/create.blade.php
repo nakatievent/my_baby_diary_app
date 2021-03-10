@@ -17,7 +17,7 @@
                 <br>
             </div>
 
-            <form action="/posts" method="post" enctype="multipart/form-data">
+            <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
 
                 <div class="mb-3">
@@ -39,11 +39,11 @@
 
                 <br>
 
-                <div>
-                    <input type="submit" class="btn btn-primary" value="送信">
-                </div>
+                <input type="submit" class="btn btn-primary" value="投稿">
+                <a class="btn btn-primary" href="{{ route('posts.index') }}" type="button">一覧に戻る</a>
 
             </form>
+
         </div>
     </div>
 </div>
