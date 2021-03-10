@@ -17,8 +17,10 @@
                 <br>
             </div>
 
-            <form action="/posts/{{ $post->id }}" method="post">
-                {{ csrf_field() }}
+            <form action="{{ route('posts.update', $post->id) }}" method="post">
+                @method('PUT')
+                @csrf
+                <!-- {{ csrf_field() }} -->
 
                 <div class="form-group">
                     <label for="picture" class="form-label">写真を選択して下さい</label>
