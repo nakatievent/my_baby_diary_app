@@ -17,7 +17,7 @@
                 <br>
             </div>
 
-            <form action="/posts" method="post" enctype="multipart/form-data">
+            <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
                 {{ csrf_field() }}
 
                 <div class="mb-3">
