@@ -14,6 +14,7 @@ RUN apt-get update && \
 
 RUN curl -SL https://deb.nodesource.com/setup_15.x | bash
 RUN apt-get install -y nodejs
+RUN apt-get install -y imagemagick libmagickwand-dev
 
 COPY ./php.ini /usr/local/etc/php/php.ini
 
