@@ -6,14 +6,47 @@ use Illuminate\Http\Request;
 
 use App\Models\Post;
 
+use Auth;
+
 class PostController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-      // $posts変数にPostモデルから全てのレコードを取得して代入する
-      $posts = Post::paginate(10);
+      $keyword = $request->input('keyword');
+      if ($keyword) {
+        $posts = Post::where("user_id", Auth::id())
+          ->where(function($query) use($keyword){
+            $query->where("title", "like", "%$keyword%")
+              ->orWhere("diary", "like", "%$keyword%");
+          })
+          ->paginate(10);
+      } else {
+          // $posts変数にPostモデルから全てのレコードを取得して代入する
+          $posts = Post::where("user_id", Auth::id())->paginate(10);
+      }
       return view('posts.index', ['posts' => $posts]);
+    }
+
+    public function favorites()
+    {
+        $user = Auth::user();
+        $posts = $user->favorite_posts()->get();
+        dd($posts);
+    }
+
+    public function add_favorite(Request $request, $id)
+    {
+      $user = Auth::user();
+      $favorite_post_ids = $user->favorite_posts()->pluck('post_id')->toArray();
+      if (!in_array($id, $favorite_post_ids)) {
+          $favorite_post_ids[] = $id;
+      }
+      $user-> favorite_posts()->detach();
+      // dd();
+      $user->favorite_posts()->attach($favorite_post_ids);
+      // 保存後に一覧ページへリダイレクト
+      return redirect()->route('posts.index');
     }
 
 
@@ -72,11 +105,14 @@ class PostController extends Controller
     {
       // idを元にレコードを検索して$postに代入
       $post = Post::find($id);
+
       // editで編集されたデータを$postにそれぞれ代入する
       $post->title = $request->title;
       $post->diary = $request->diary;
+
       // 保存
       $post->save();
+
       // 一覧ページへリダイレクト
       return redirect()->route('posts.index');
     }
@@ -86,8 +122,10 @@ class PostController extends Controller
     {
       // idを元にレコードを検索
       $post = Post::find($id);
+
       // 削除
       $post->delete();
+
       // 一覧ページへリダイレクト
       return redirect()->route('posts.index');
     }
