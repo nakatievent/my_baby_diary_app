@@ -13,7 +13,7 @@
 
         <nav class="navbar navbar-expand-lg navbar-light py-4">
             <div class="container-fluid">
-                <a class="navbar-brand fs-3" href="{{ url('/') }}">
+                <a class="navbar-brand fs-3" href="{{ route('posts.index') }}">
                     Babydiary 〜子供の成長日記〜
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -60,10 +60,12 @@
                             </li>
                         @endguest
                     </ul>
+
                     <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control me-2" type="search" name="keyword" placeholder="検索したい単語を入力" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
+                    
                 </div>
             </div>
         </nav>
@@ -80,15 +82,6 @@
                             <h5 class="card-title text-center fw-bolder">{{ $post->title }}</h5>
                             <hr>
                             <p class="card-text text-truncate">{{ $post->diary }}</p> 
-                            <!-- <a class="btn btn-primary" href="/posts/{{ $post->id }}" type="button">詳細を表示</a>  -->
-                            <!-- <a class="btn btn-primary" href="/posts/{{ $post->id }}/edit" type="button">編集する</a> -->
-                            <!-- <form action="/posts/{{ $post->id }}" method="post"> 
-                              {{ csrf_field() }} 
-                              <input type="hidden" name="_method" value="delete"> 
-                              <button type="submit" class="btn btn-primary" name="" value="削除する"> 
-                              {{-- <a href="/posts/{{ $post->id }}">削除する</a> --}}
-                            </form> -->
-                            <!-- {{-- <a href="/posts/{{$post->id}}">削除する</a> --}} -->
                         </div>
 
                         <div class="card">
@@ -96,12 +89,17 @@
                                 <li class="list-group-item d-grid gap-2"><a class="btn btn-light btn-sm" href="/posts/{{ $post->id }}" type="button">詳細を表示</a></li>
                                 <li class="list-group-item d-grid gap-2"><a class="btn btn-light btn-sm" href="/posts/{{ $post->id }}/edit" type="button">編集する</a></li>
                                 <li class="list-group-item d-grid gap-2">
-                                    <form action="/posts/{{ $post->id }}" method="post" class="d-grid .gap-2"> 
-                                        {{ csrf_field() }}
+                                    <form class="d-grid .gap-2">
+                                        <a class="btn btn-light btn-sm" href="/posts/add_favorite/{{ $post->id }}" type="button">お気に入りに追加</a>
+                                    </form>
+                                </li>
+                                <li class="list-group-item d-grid gap-2">
+                                    <form action="{{ route('posts.destroy', $post->id) }}" method="post" class="d-grid .gap-2"> 
+                                        @method('DELETE')
+                                        @csrf
                                         <input type="hidden" name="_method" value="delete"> 
                                         <input type="submit" class="btn btn-danger btn-sm" name="" value="削除する" >
                                     </form>
-                                    <!-- {{-- <a href="{{ route('posts.destroy') }} id={{ $posts->id }}">削除する</a> --}} -->
                                 </li>
                             </ul>
                         </div>
@@ -112,15 +110,24 @@
                 </div>
                 @endforeach
             </div>
+            <br>
         </div>
 
         <div class="col-md-3">
+            <div class="card">
+            <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">An item</li>
+                </ul>
+            </div>
+            <br>
             <div class="d-grid gap-2">
-                <a class="btn btn-primary" href="/posts/create" role="button">新規投稿</a>
-                <button class="btn btn-primary" type="button">お気に入り</button>
-                <button class="btn btn-primary" type="button">Button</button>
-                <button class="btn btn-primary" type="button">Button</button>
-                <button class="btn btn-primary" type="button">Button</button>
+                <a class="btn btn-primary" href="{{ route('posts.create') }}" role="button">新規投稿</a>
+                <a class="btn btn-primary" type="button"  href="{{ route('posts.favorite') }}">お気に入り</a>
             </div>
         </div>
 
