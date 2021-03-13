@@ -1,0 +1,23 @@
+.outline {
+    opacity: 0.8;
+    /* animation  : sample2Anime 4s linear infinite alternate; */
+}
+
+/* トップ画面の画像のcss */
+.img {
+    min-height: 800px;
+    background: #f7f7f7 url(../image/64FF6EC0-E9EB-4511-B09A-68D9388769F2_1_105_c.jpeg) center top/cover no-repeat;
+}
+
+/* トップ画面のアプリ名の動き */
+@keyframes sample2Anime {
+    0% { text-shadow:  2px  2px 10px #fff ,
+                      -2px  2px 10px #fff ,
+                       2px -2px 10px #fff ,
+                      -2px -2px 10px #fff; }
+    100% { text-shadow:  2px  2px 10px #777 ,
+                        -2px  2px 10px #777 ,
+                         2px -2px 10px #777 ,
+                        -2px -2px 10px #777; }
+}
+
