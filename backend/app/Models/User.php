@@ -17,6 +17,7 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    // ポストモデルと多対多の関係なので下記の記述を追加する
     public function favorite_posts()
     {
         return $this->belongsToMany('App\Models\Post', 'favorites', 'user_id', 'post_id');
