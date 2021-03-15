@@ -117,7 +117,7 @@
 
             <div class="d-grid gap-2">
                 <a class="btn btn-primary" href="{{ route('posts.create') }}" role="button">新規投稿</a>
-                <a class="btn btn-primary" type="button"  href="{{ route('posts.favorite') }}">お気に入り</a>
+                <a class="btn btn-primary" type="button"  href="{{ route('posts.favorites') }}">お気に入り</a>
             </div>
         </div>
 
