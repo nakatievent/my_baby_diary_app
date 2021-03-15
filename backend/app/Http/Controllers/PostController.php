@@ -13,38 +13,49 @@ class PostController extends Controller
 
     public function index(Request $request)
     {
+      // inputタグからキーワードを取得
       $keyword = $request->input('keyword');
+
+      // キーワード検索を行い、タイトルや日記にキーワードが存在すればその日記を表示させる
       if ($keyword) {
         $posts = Post::where("user_id", Auth::id())
           ->where(function($query) use($keyword){
             $query->where("title", "like", "%$keyword%")
-              ->orWhere("diary", "like", "%$keyword%");
-          })
-          ->paginate(10);
+                  ->orWhere("diary", "like", "%$keyword%");
+        })->paginate(10);
       } else {
-          // $posts変数にPostモデルから全てのレコードを取得して代入する
-          $posts = Post::where("user_id", Auth::id())->paginate(10);
+        // $posts変数にPostモデルから全てのレコードを取得して代入する
+        $posts = Post::where("user_id", Auth::id())->paginate(10);
       }
+
+      // dd($posts);
       return view('posts.index', ['posts' => $posts]);
     }
 
+
     public function favorites()
     {
-        $user = Auth::user();
-        $posts = $user->favorite_posts()->get();
-        dd($posts);
+      $user = Auth::user();
+      $posts = $user->favorite_posts()->get();
+      dd($posts);
     }
+
 
     public function add_favorite(Request $request, $id)
     {
       $user = Auth::user();
+
       $favorite_post_ids = $user->favorite_posts()->pluck('post_id')->toArray();
+
       if (!in_array($id, $favorite_post_ids)) {
           $favorite_post_ids[] = $id;
       }
-      $user-> favorite_posts()->detach();
-      // dd();
+
+      $user->favorite_posts()->detach();
       $user->favorite_posts()->attach($favorite_post_ids);
+
+      dd($user);
+
       // 保存後に一覧ページへリダイレクト
       return redirect()->route('posts.index');
     }
@@ -89,6 +100,7 @@ class PostController extends Controller
     {
       // 引数で受け取った$idを元にfindでレコードを取得
        $post = Post::find($id);
+
         // viewにデータを渡す
        return view('posts.show', ['post' => $post]);
     }
@@ -97,6 +109,7 @@ class PostController extends Controller
     public function edit($id)
     {
       $post = Post::find($id);
+
       return view('posts.edit', ['post' => $post]);
     }
 
