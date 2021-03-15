@@ -36,7 +36,7 @@ class PostController extends Controller
     {
       $user = Auth::user();
       $posts = $user->favorite_posts()->get();
-      dd($posts);
+      return view('posts.favorites');
     }
 
 
