@@ -43,9 +43,10 @@
 
                 <br>
 
-                <div class="form-group">
+                <div class="form-group text-center">
                     <input type="hidden" name="_method" value="patch">
                     <input type="submit" class="btn btn-primary" value="更新">
+                    <a class="btn btn-primary" href="{{ route('posts.index') }}" type="button">一覧に戻る</a>
                 </div>
 
             </form>

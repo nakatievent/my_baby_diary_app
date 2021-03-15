@@ -39,9 +39,10 @@
 
                 <br>
 
-                <input type="submit" class="btn btn-primary" value="投稿">
-                <a class="btn btn-primary" href="{{ route('posts.index') }}" type="button">一覧に戻る</a>
-
+                <div class="text-center">
+                    <input type="submit" class="btn btn-primary" value="投稿">
+                    <a class="btn btn-primary" href="{{ route('posts.index') }}" type="button">一覧に戻る</a>
+                </div>
             </form>
 
         </div>
