@@ -26,7 +26,7 @@ Route::middleware(['auth']) -> group(function () {
         'posts' => PostController::class,
     ]);
     // ログインしていないとお気に入りに追加した画像が見えないようにする設定
-    Route::get('/posts/favorites', [App\Http\Controllers\PostController::class, 'favorites'])->name('posts.favorite');
+    Route::get('/posts/favorites', [App\Http\Controllers\PostController::class, 'favorites'])->name('posts.favorites');
     // ログインしていないとお気に入りに追加することができない設定
     Route::get('/posts/add_favorite/{id}', [App\Http\Controllers\PostController::class, 'add_favorite']);
 
