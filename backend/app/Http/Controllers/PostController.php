@@ -28,7 +28,6 @@ class PostController extends Controller
         $posts = Post::where("user_id", Auth::id())->paginate(10);
       }
 
-      // dd($posts);
       return view('posts.index', ['posts' => $posts]);
     }
 
