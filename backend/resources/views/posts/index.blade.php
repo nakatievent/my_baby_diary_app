@@ -27,7 +27,7 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
@@ -73,15 +73,15 @@
 
     <div class="row">
         <div class="col-md-9">
-            <div class="row row-cols-1 row-cols-md-2 g-4"> 
+            <div class="row row-cols-1 row-cols-md-2 g-4">
                 @foreach ($posts as $post)
                 <div class="col">
                     <div class="card h-100">
-                        <img src="{{ Storage::url($post->picture) }}" class="card-img-top" alt="...">
+                        <img src="{{ Storage::url($post->picture) }}" class="card-img-top img-thumbnail img-fluid" style="width: 100%; height: 300px;" alt="...">
                         <div class="card-body">
                             <h5 class="card-title text-center fw-bolder">{{ $post->title }}</h5>
                             <hr>
-                            <p class="card-text text-truncate">{{ $post->diary }}</p> 
+                            <p class="card-text text-truncate">{{ $post->diary }}</p>
                         </div>
 
                         <div class="card">
@@ -114,17 +114,7 @@
         </div>
 
         <div class="col-md-3">
-            <div class="card">
-            <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">An item</li>
-                </ul>
-            </div>
-            <br>
+
             <div class="d-grid gap-2">
                 <a class="btn btn-primary" href="{{ route('posts.create') }}" role="button">新規投稿</a>
                 <a class="btn btn-primary" type="button"  href="{{ route('posts.favorite') }}">お気に入り</a>
