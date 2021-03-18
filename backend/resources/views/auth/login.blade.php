@@ -53,7 +53,7 @@
                 <div class="d-grid gap-2 d-md-block text-center">
                     <button type="submit" class="btn btn-primary">{{ __('ログイン') }}</button>
                     <a href="/" type="button" class="btn btn-primary">HOMEへ戻る</a>
-                    <button class="btn btn-danger" href="/login/guest" role="button">＊採用担当者専用ログイン＊</button>
+                    <a href="/login/guest" class="btn btn-danger" role="button">＊採用担当者専用ログイン＊</a>
                 </div>
 
                 <div class="flex items-center mt-4 mx-auto text-center">

@@ -25,11 +25,11 @@ class LoginController extends Controller
     {
         $email = 'example@gmail.com';
         $password = 'password';
-    
+
         if (Auth::attempt(['email' => $email, 'password' => $password])) {
             return redirect()->route('posts.index');
         }
-    
+
         return redirect('/');
     }
 

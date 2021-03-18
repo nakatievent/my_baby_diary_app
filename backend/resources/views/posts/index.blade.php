@@ -102,9 +102,10 @@
                                     </form>
                                 </li>
                             </ul>
-                        </div>
 
-                        <div class="card-footer text-center"><small class="text-muted">投稿日：{{ $post->created_at }}</small></div>
+                            <div class="card-footer text-center"><small class="text-muted">投稿日：{{ $post->created_at }}</small></div>
+
+                        </div>
 
                     </div>
                 </div>

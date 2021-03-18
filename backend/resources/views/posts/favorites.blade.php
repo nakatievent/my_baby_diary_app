@@ -7,9 +7,9 @@
 {{-- app.blade.phpの@yield('content')に以下のレイアウトを代入 --}} 
 @section('content')
 
-<div class="container col-md-9 mx-auto">
+<div class="container col-md-12 mx-auto">
     <div class="row">
-        <!-- <div class="col-md-9"> -->
+        <div class="col-md-9">
 
         <nav class="navbar navbar-expand-lg navbar-light py-4">
             <div class="container-fluid">
@@ -102,9 +102,10 @@
                                     </form>
                                 </li>
                             </ul>
-                        </div>
 
-                        <div class="card-footer text-center"><small class="text-muted">投稿日：{{ $post->created_at }}</small></div>
+                            <div class="card-footer text-center"><small class="text-muted">投稿日：{{ $post->created_at }}</small></div>
+
+                        </div>
 
                     </div>
                 </div>
@@ -112,26 +113,11 @@
             </div>
             <br>
         </div>
-
-        <div class="col-md-3">
-
-            <div class="d-grid gap-2">
-                <a class="btn btn-primary" href="{{ route('posts.create') }}" role="button">新規投稿</a>
-                <a class="btn btn-primary" type="button"  href="{{ route('posts.favorite') }}">お気に入り</a>
-            </div>
-        </div>
-
     </div>
 
     <br>
 
-    <div class="row">
-        <nav aria-label="Search results pages">
-            <ul class="pagination pagination-md justify-content-center">
-                {{ $posts->links() }}
-            </ul>
-        </nav>
-    </div>
+
 
     <div class="row">
         <footer class="footer mt-auto py-3">

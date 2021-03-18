@@ -36,7 +36,8 @@ class PostController extends Controller
     {
       $user = Auth::user();
       $posts = $user->favorite_posts()->get();
-      return view('posts.favorites');
+      // dd($posts);
+      return view('posts.favorites', ['posts' => $posts]);
     }
 
 
@@ -52,8 +53,6 @@ class PostController extends Controller
 
       $user->favorite_posts()->detach();
       $user->favorite_posts()->attach($favorite_post_ids);
-
-      dd($user);
 
       // 保存後に一覧ページへリダイレクト
       return redirect()->route('posts.index');
