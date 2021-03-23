@@ -1,14 +1,18 @@
 version: 2.1
 jobs:
   build:
-    working_directory: backend
+    working_directory: ~/backend
     docker:
       - image: circleci/php:7.3-node-browsers
     steps:
       - checkout
       - run: sudo composer self-update --1
-      - run: composer install -n --prefer-dist
-      - run: npm ci
+      - run: 
+          command: composer install -n --prefer-dist
+          working_directory: backend # 各ステップでそれぞれ指定できる
+      - run: 
+          command: npm ci
+          working_directory: backend # 各ステップでそれぞれ指定できる
       - run: npm run dev
       - run:
           name: php test
