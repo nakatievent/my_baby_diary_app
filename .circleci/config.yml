@@ -7,13 +7,15 @@ jobs:
     steps:
       - checkout
       - run: sudo composer self-update --1
-      - run: 
+      - run:
           command: composer install -n --prefer-dist
           working_directory: backend # 各ステップでそれぞれ指定できる
-      - run: 
+      - run:
           command: npm ci
           working_directory: backend # 各ステップでそれぞれ指定できる
-      - run: npm run dev
+      - run:
+          command: npm run dev
+          working_directory: backend # 各ステップでそれぞれ指定できる
       - run:
           name: php test
           command: vendor/bin/phpunit
