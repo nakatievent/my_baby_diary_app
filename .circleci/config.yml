@@ -19,4 +19,4 @@ jobs:
       - run:
           name: php test
           command: vendor/bin/phpunit
-          working_directory: backend/vendor # 各ステップでそれぞれ指定できる
+          working_directory: backend # 各ステップでそれぞれ指定できる
