@@ -8,7 +8,7 @@ jobs:
       - run: sudo composer self-update --1
       - run: composer install -n --prefer-dist --working-dir=backend
           # working_directory: src
-      - run: npm ci
+      - run: npm ci --working-dir=backend
       - run: npm run dev
       - run:
           name: php test
