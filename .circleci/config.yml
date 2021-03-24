@@ -15,7 +15,7 @@ jobs:
       - save_cache:
           key: composer-v1-{{ checksum "composer.lock" }}
           paths:
-            - backend/vendor
+            - ~/backend/vendor
       - run:
           command: npm ci
           working_directory: backend
