@@ -21,16 +21,13 @@ jobs:
       - run:
           name: npm ci
           command: |
-            if [ ! -d node_modules ]; then
+            if [ ! -d backend/node_modules ]; then
               npm ci
             fi
       - save_cache:
           key: npm-v1-{{ checksum "backend/package-lock.json" }}
           paths:
             - node_modules
-      # - run:
-      #     command: npm ci
-      #     working_directory: backend
       - run:
           command: npm run dev
           working_directory: backend
