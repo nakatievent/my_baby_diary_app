@@ -7,16 +7,22 @@ jobs:
     steps:
       - checkout
       - run: sudo composer self-update --1
+      - restore_cache:
+          key: composer-v1-{{ checksum "composer.lock" }}
       - run:
           command: composer install -n --prefer-dist
-          working_directory: backend # 各ステップでそれぞれ指定できる
+          working_directory: backend
+      - save_cache:
+          key: composer-v1-{{ checksum "composer.lock" }}
+          paths:
+            - backend
       - run:
           command: npm ci
-          working_directory: backend # 各ステップでそれぞれ指定できる
+          working_directory: backend
       - run:
           command: npm run dev
-          working_directory: backend # 各ステップでそれぞれ指定できる
+          working_directory: backend
       - run:
           name: php test
           command: vendor/bin/phpunit
-          working_directory: backend # 各ステップでそれぞれ指定できる
+          working_directory: backend
