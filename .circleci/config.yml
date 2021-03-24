@@ -24,6 +24,7 @@ jobs:
             if [ ! -d backend/node_modules ]; then
               npm ci
             fi
+          working_directory: backend
       - save_cache:
           key: npm-v1-{{ checksum "backend/package-lock.json" }}
           paths:
